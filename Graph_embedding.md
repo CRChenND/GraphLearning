@@ -21,7 +21,7 @@ $\qquad$ walk length $t$
 4. $\qquad$ $O = Shuffle(V)$   
 5. $\qquad$ **for each** $v_i \in O$ **do**   
 6. $\qquad\qquad$ $W_{v_i} = RandomWalk(G, v_i, t)$   
-7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   <font color=red>$$\leftarrow \underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i-1},v_{i+1},v_{i+w}\}\ |\ \Phi(v_i))$</font>
+7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   <font color=red>$\leftarrow \underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i-1},v_{i+1},v_{i+w}\}\ |\ \Phi(v_i))$</font>
 8. $\qquad$ **end for**   
 9. **end for**   
 
