@@ -14,11 +14,11 @@ $\qquad$ window size $w$
 $\qquad$ embedding size $d$    
 $\qquad$ walks per vertex $\gamma$   
 $\qquad$ walk length $t$   
-**Ouput:** matrix of vertex representations $\Phi \in \mathbb{R}^{|V| \times d}$   
+**Ouput:** matrix of vertex representations $\Phi \in \mathbb{R}^{|V| \times d}$
 1. Initialization: Sample $\Phi$ from $U^{|V| \times d} $   
 2. Build a binary Tree $T$ from $V$   
 3. **for** $i$ = 0 to $\gamma$ **do**   
-4. $\qquad$ $O$ = Shuffle($V$)   
+4. $\qquad$ $O = Shuffle(V)$   
 5. $\qquad$ **for each** $v_i \in O$ **do**   
 6. $\qquad\qquad$ $W_{v_i} = RandomWalk(G, v_i, t)$   
 7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   
