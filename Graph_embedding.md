@@ -14,7 +14,7 @@ $\qquad$ window size $w$
 $\qquad$ embedding size $d$    
 $\qquad$ walks per vertex $\gamma$   
 $\qquad$ walk length $t$   
-**Ouput:** matrix of vertex representations $\Phi \in \R^{|V| \times d}$   
+**Ouput:** matrix of vertex representations $\Phi \in \mathbb{R}^{|V| \times d}$   
 1. Initialization: Sample $\Phi$ from $U^{|V| \times d} $   
 2. Build a binary Tree $T$ from $V$   
 3. **for** $i$ = 0 to $\gamma$ **do**   
