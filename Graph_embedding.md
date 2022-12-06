@@ -16,12 +16,12 @@ $\qquad$ walks per vertex $\gamma$
 $\qquad$ walk length $t$   
 **Ouput:** matrix of vertex representations $\Phi \in \mathbb{R}^{|V| \times d}$
 1. Initialization: Sample $\Phi$ from $U^{|V| \times d} $   
-2. Build a binary Tree $T$ from $V$  <font color=red>&larr Hierarchical Softmax</font>
+2. Build a binary Tree $T$ from $V$  <font color=red>$\leftarrow  Hierarchical\ Softmax$</font>
 3. **for** $i$ = 0 to $\gamma$ **do**   
 4. $\qquad$ $O = Shuffle(V)$   
 5. $\qquad$ **for each** $v_i \in O$ **do**   
 6. $\qquad\qquad$ $W_{v_i} = RandomWalk(G, v_i, t)$   
-7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   <font color=red>$\larr$ $\underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i-1},v_{i+1},v_{i+w}\}\ |\ \Phi(v_i))$</font>
+7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   <font color=red>$$\leftarrow \underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i-1},v_{i+1},v_{i+w}\}\ |\ \Phi(v_i))$</font>
 8. $\qquad$ **end for**   
 9. **end for**   
 
