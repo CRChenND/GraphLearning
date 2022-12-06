@@ -5,6 +5,9 @@ Intuitively, we can use one-hot encoding or adjacency matrix to represent every 
 
 Therefore, we want to apply graph embedding to obtain a low-dimensional continuous representation to keep more information in the graph.
 
+- [DeepWalk](#deepwalk)
+- [LINE](#line)
+
 ## [DeepWalk](http://www.perozzi.net/publications/14_kdd_deepwalk.pdf)
 ​​DeepWalk originates from word2vec, which uses the co-occurrence relationship between nodes to learn the representation. To describe the co-occurrence relationship between nodes, DeepWalk uses *truncated random walk* (random walk with fixed length) to sample nodes in the graph.
 
@@ -36,3 +39,6 @@ The distribution of random walks in the network is similar to the power-law dist
 1. Use missing words(nodes) to predict context because it is too complicated to calculate the context.
 1. Consider bilateral nodes within the window size $w$ for the given node.
 2. Insensitive to the order of nodes.
+
+
+## [LINE](https://arxiv.org/pdf/1503.03578.pdf)
