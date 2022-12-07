@@ -19,12 +19,12 @@ $\qquad$ walks per vertex $\gamma$
 $\qquad$ walk length $t$   
 **Ouput:** matrix of vertex representations $\Phi \in \mathbb{R}^{|V| \times d}$
 1. Initialization: Sample $\Phi$ from $U^{|V| \times d} $   
-2. Build a binary Tree $T$ from $V$  [$\leftarrow  Hierarchical\ Softmax\ to\ calculate\ Pr(u_k | \Phi(v_j))$](## "reduce the computational complexity from O(|V|) to O(log|V|), see Algorithm line 3")
+2. Build a binary Tree $T$ from $V$  $\leftarrow  Hierarchical\ Softmax\ to\ calculate\ Pr(u_k | \Phi(v_j))$ [Tip](## "reduce the computational complexity from O(|V|) to O(log|V|), see Algorithm line 3")
 3. **for** $i$ = 0 to $\gamma$ **do**   
 4. $\qquad$ $O = Shuffle(V)$   
 5. $\qquad$ **for each** $v_i \in O$ **do**   
 6. $\qquad\qquad$ $W_{v_i} = RandomWalk(G, v_i, t)$   
-7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   [$\leftarrow \underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i+w}\} \setminus v_i |\ \Phi(v_i))=\overset{j=i+w}{\underset{\underset{j \not ={i}}{j=i-w}}{\prod}}\ Pr(v_j|\Phi(v_i))$](## "It approximates the conditional probability using an independence assumption")
+7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   $\leftarrow \underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i+w}\} \setminus v_i |\ \Phi(v_i))=\overset{j=i+w}{\underset{\underset{j \not ={i}}{j=i-w}}{\prod}}\ Pr(v_j|\Phi(v_i))$ [Tip](## "It approximates the conditional probability using an independence assumption")
 8. $\qquad$ **end for**   
 9. **end for** 
 
