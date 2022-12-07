@@ -9,10 +9,9 @@ Therefore, we want to apply graph embedding to obtain a **low-dimensional contin
 - [LINE](#line)
 
 ## [DeepWalk](http://www.perozzi.net/publications/14_kdd_deepwalk.pdf)
-![](https://img.shields.io/badge/homogeneous-orange) ![](https://img.shields.io/badge/undirected-blue)
 ​​DeepWalk originates from word2vec, which uses the co-occurrence relationship between nodes to learn the representation. To describe the co-occurrence relationship between nodes, DeepWalk uses *truncated random walk* (random walk with fixed length) to sample nodes in the graph.
 
-**Algorithm** $ DeepWalk(G, w, d, \gamma, t) $   
+**Algorithm 1** $ DeepWalk(G, w, d, \gamma, t) $   
 **Input:** graph $G(V,E)$   
 $\qquad$ window size $w$   
 $\qquad$ embedding size $d$    
@@ -20,14 +19,23 @@ $\qquad$ walks per vertex $\gamma$
 $\qquad$ walk length $t$   
 **Ouput:** matrix of vertex representations $\Phi \in \mathbb{R}^{|V| \times d}$
 1. Initialization: Sample $\Phi$ from $U^{|V| \times d} $   
-2. Build a binary Tree $T$ from $V$  <font color=red>$\leftarrow  Hierarchical\ Softmax$</font>
+2. Build a binary Tree $T$ from $V$  [$\leftarrow  Hierarchical\ Softmax\ to\ calculate\ Pr(u_k | \Phi(v_j))$](## "reduce the computational complexity from O(|V|) to O(log|V|), see Algorithm line 3")
 3. **for** $i$ = 0 to $\gamma$ **do**   
 4. $\qquad$ $O = Shuffle(V)$   
 5. $\qquad$ **for each** $v_i \in O$ **do**   
 6. $\qquad\qquad$ $W_{v_i} = RandomWalk(G, v_i, t)$   
-7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   <font color=red>$\leftarrow \underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i-1},v_{i+1},v_{i+w}\}\ |\ \Phi(v_i))$</font>
+7. $\qquad\qquad$ $SkipGram(\Phi, W_{v_i}, w)$   [$\leftarrow \underset {\Phi}{minimize}\ -log\ Pr(\{v_{i-w},...,v_{i+w}\} \setminus v_i |\ \Phi(v_i))=\overset{j=i+w}{\underset{\underset{j \not ={i}}{j=i-w}}{\prod}}\ Pr(v_j|\Phi(v_i))$](## "It approximates the conditional probability using an independence assumption")
 8. $\qquad$ **end for**   
-9. **end for**   
+9. **end for** 
+
+**Algorithm 2** $SkipGram(\Phi, W_{v_i}, w)$    
+1. **for each** $v_j \in W_{v_i}$ **do**
+2. $\qquad$ **for each** $u_k \in W_{v_i}[j-w:j+w]$ **do**
+3. $\qquad\qquad$ $J(\Phi)=-log\ Pr(u_k | \Phi(v_j))$
+4. $\qquad\qquad$ $\Phi = \Phi - \alpha\ * \frac{\partial J}{\partial \Phi}$      
+5. $\qquad$ **end for**       
+6. **end for** 
+
 
 ### The advantage of using random walk:
 1. **Parallelizable**: For a large network, random walks can be performed at different vertices at the same time, reducing the sampling time.
@@ -39,8 +47,7 @@ The distribution of random walks in the network is similar to the power-law dist
 ### Why use skip-gram:
 1. Use missing words(nodes) to predict context because it is too complicated to calculate the context.
 1. Consider bilateral nodes within the window size $w$ for the given node.
-2. Insensitive to the order of nodes.
+2. Order independence captures a sense of ‘nearnes.
 
 
 ## [LINE](https://arxiv.org/pdf/1503.03578.pdf)
-![](https://img.shields.io/badge/homogeneous-orange) ![](https://img.shields.io/badge/undirected|directed-blue)
