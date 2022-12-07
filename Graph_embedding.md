@@ -19,7 +19,7 @@ $\qquad$ walks per vertex $\gamma$
 $\qquad$ walk length $t$   
 **Ouput:** matrix of vertex representations $\Phi \in \mathbb{R}^{|V| \times d}$
 1. Initialization: Sample $\Phi$ from $U^{|V| \times d} $   
-2. Build a binary Tree $T$ from $V$  $\leftarrow  Hierarchical\ Softmax\ to\ calculate\ Pr(u_k | \Phi(v_j))$ [Tip](## "reduce the computational complexity from O(|V|) to O(log|V|), see Algorithm line 3")
+2. Build a binary Tree $T$ from $V$  $\leftarrow  Hierarchical\ Softmax\ to\ calculate\ Pr(u_k | \Phi(v_j))$ [Tip](## "reduce the computational complexity from O(|V|) to O(log|V|), see Algorithm 2 line 3")
 3. **for** $i$ = 0 to $\gamma$ **do**   
 4. $\qquad$ $O = Shuffle(V)$   
 5. $\qquad$ **for each** $v_i \in O$ **do**   
@@ -32,7 +32,7 @@ $\qquad$ walk length $t$
 1. **for each** $v_j \in W_{v_i}$ **do**
 2. $\qquad$ **for each** $u_k \in W_{v_i}[j-w:j+w]$ **do**
 3. $\qquad\qquad$ $J(\Phi)=-log\ Pr(u_k | \Phi(v_j))$
-4. $\qquad\qquad$ $\Phi = \Phi - \alpha\ * \frac{\partial J}{\partial \Phi}$      
+4. $\qquad\qquad$ $\Phi = \Phi - \alpha\ * \frac{\partial J}{\partial \Phi}$
 5. $\qquad$ **end for**       
 6. **end for** 
 
