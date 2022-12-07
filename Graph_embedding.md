@@ -3,12 +3,13 @@ Intuitively, we can use one-hot encoding or adjacency matrix to represent every 
 1. It results in a very **sparse** graph when there are many nodes.
 2. It losts node features or extra information in the graph.
 
-Therefore, we want to apply graph embedding to obtain a low-dimensional continuous representation to keep more information in the graph.
+Therefore, we want to apply graph embedding to obtain a **low-dimensional continuous** representation to keep more information in the graph.
 
 - [DeepWalk](#deepwalk)
 - [LINE](#line)
 
 ## [DeepWalk](http://www.perozzi.net/publications/14_kdd_deepwalk.pdf)
+![](https://img.shields.io/badge/homogeneous-orange) ![](https://img.shields.io/badge/undirected-blue)
 ​​DeepWalk originates from word2vec, which uses the co-occurrence relationship between nodes to learn the representation. To describe the co-occurrence relationship between nodes, DeepWalk uses *truncated random walk* (random walk with fixed length) to sample nodes in the graph.
 
 **Algorithm** $ DeepWalk(G, w, d, \gamma, t) $   
@@ -42,3 +43,4 @@ The distribution of random walks in the network is similar to the power-law dist
 
 
 ## [LINE](https://arxiv.org/pdf/1503.03578.pdf)
+![](https://img.shields.io/badge/homogeneous-orange) ![](https://img.shields.io/badge/undirected|directed-blue)
