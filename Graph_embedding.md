@@ -134,7 +134,8 @@ node2vec is a semi-supervised algorithm for scalable feature learning in network
 
 The $2^{nd}$ order random walk means it considers last traversed nodes $t$, current node $v$, and next node(s) $x$. The "biased" means the random walk is controlled by [return parameter](## "controls the likelihood of immediately revisiting a node in the walk") $p$ and [in-out parameter](## "allows the search to differentiate between “inward” and “outward” nodes")  $q$.
 
-**Sampling distribution**: 
+**Sampling distribution**:
+
 $$
 P(c_i=x | c_{i-1}=v) = 
 \begin{cases}
@@ -143,24 +144,26 @@ P(c_i=x | c_{i-1}=v) =
 \end{cases}
 $$
 
-$c_i$: $i$th node in the walk,         
+$c_i$: $i$ th node in the walk,         
 $\pi_{vx}$: unnormalized transition probability between nodes between $v$ and $x$, $\pi_{vx} = \alpha_{pq} (t,x) \cdot w_{vx}$
 $Z$: normalizing constant            
 
 **Search bias**:
-$$
+
+$$ 
 \alpha_{pq}(t,x) = 
-\begin{cases}
-\frac{1}{p} \quad if\ d_{tx} = 0 \quad \larr Go\ back\\
-1 \quad if\ d_{tx} = 1 \quad \larr Stay\ the\ same\ distance\\
-\frac{1}{q} \quad if\ d_{tx} = 2 \quad \larr Go\ further\\
-\end{cases}
+\begin{cases} 
+\frac{1}{p}, &if\ d_{tx} = 0 \leftarrow Go\ back \\
+1, &if\ d_{tx} = 1 \leftarrow Stay\ the\ same\ distance \\ 
+\frac{1}{q}, &if\ d_{tx} = 2 \leftarrow Go\ further
+\end{cases} 
 $$
+
 
 $p > max(q, 1)$: less likely to sample an already visited node in the following two steps,      
 $p < max(q, 1)$: lead the walk to backtrack a step and keep the walk “local”
-$q > 1$: bias towards nodes close to node $t$ $\rarr$ obtain a local view and approximate BFS behavior          
-$q < 1$: incline to nodes away from node $t$ $\rarr$ obtain an outward exploration and approximate DFS behavior 
+$q > 1$: bias towards nodes close to node $t$ $\rightarrow$ obtain a local view and approximate BFS behavior          
+$q < 1$: incline to nodes away from node $t$ $\rightarrow$ obtain an outward exploration and approximate DFS behavior 
 
 
 
