@@ -125,9 +125,18 @@ $$
 $$
 
 $$
-\vec{x}^TL_{sym}\vec{x} = (\vec{x}^TD^{-\frac{1}{2}})L(D^{-\frac{1}{2}}\vec{x}) = \sum_{(i,j) \in E} (\frac{x_i}{\sqrt{x_i}} - \frac{x_j}{\sqrt{x_j}})^2 \geq 0\\
-\because \vec{x}^T\vec{x} > 0\\
-\frac{\vec{x}^TL_{sym}\vec{x}}{\vec{x}^T\vec{x}} \geq 0\\
+\vec{x}^TL_{sym}\vec{x} = (\vec{x}^TD^{-\frac{1}{2}})L(D^{-\frac{1}{2}}\vec{x}) = \sum_{(i,j) \in E} (\frac{x_i}{\sqrt{x_i}} - \frac{x_j}{\sqrt{x_j}})^2 \geq 0
+$$
+
+$$
+\because \vec{x}^T\vec{x} > 0
+$$
+
+$$
+\frac{\vec{x}^TL_{sym}\vec{x}}{\vec{x}^T\vec{x}} \geq 0
+$$
+
+$$
 \Lambda_{sym} \geq 0
 $$
 
@@ -170,12 +179,30 @@ $$
 
 $$
 \vec{x}^TL^{pos}_{sym}\vec{x} = \vec{x}^T(I + D^{-\frac{1}{2}}AD^{-\frac{1}{2}})\vec{x}
-= \vec{x}^T\vec{x} + \vec{x}^TD^{-\frac{1}{2}}AD^{-\frac{1}{2}}\vec{x} \geq 0 \\
-\vec{x}^T\vec{x} \geq -\vec{x}^TD^{-\frac{1}{2}}AD^{-\frac{1}{2}}\vec{x}\\
-2\vec{x}^T\vec{x} \geq \vec{x}^T\vec{x}-\vec{x}^TD^{-\frac{1}{2}}AD^{-\frac{1}{2}}\vec{x}\\
-2\vec{x}^T\vec{x} \geq \vec{x}^T(I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})\vec{x}\\
-2\vec{x}^T\vec{x} \geq \vec{x}^TL_{sym}\vec{x}\\
-\frac{\vec{x}^TL_{sym}\vec{x}}{\vec{x}^T\vec{x}} \leq 2\\
+= \vec{x}^T\vec{x} + \vec{x}^TD^{-\frac{1}{2}}AD^{-\frac{1}{2}}\vec{x} \geq 0 
+$$
+
+$$
+\vec{x}^T\vec{x} \geq -\vec{x}^TD^{-\frac{1}{2}}AD^{-\frac{1}{2}}\vec{x}
+$$
+
+$$
+2\vec{x}^T\vec{x} \geq \vec{x}^T\vec{x}-\vec{x}^TD^{-\frac{1}{2}}AD^{-\frac{1}{2}}\vec{x}
+$$
+
+$$
+2\vec{x}^T\vec{x} \geq \vec{x}^T(I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}})\vec{x}
+$$
+
+$$
+2\vec{x}^T\vec{x} \geq \vec{x}^TL_{sym}\vec{x}
+$$
+
+$$
+\frac{\vec{x}^TL_{sym}\vec{x}}{\vec{x}^T\vec{x}} \leq 2
+$$
+
+$$
 \Lambda_{sym} \leq 2
 $$
 
