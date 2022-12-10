@@ -127,7 +127,58 @@ node2vec is a semi-supervised algorithm for scalable feature learning in network
 1. **Micro-view**: it characterize the local neighborhoods accurately
 2. **Low variance** in characterizing the distribution of nodes
 
+### node2vec algorithm:
+**LearnFeature**(Graph $G = (V,E,W)$, Dimensions $d$, Walks per node $r$, Walk length $l$, Context size $k$, Return $p$, In-out $q$)       
+$\qquad \pi = PreprocessModifiedWeights (G,p,q)$ [Tip](## "check sampling distribution and search bias")           
+$\qquad G' = (V, E, \pi)$           
+$\qquad$ Initialize $walks$ to Empty
+$\qquad$ **for** $iter = 1$ **to** $r$ **do**
+$\qquad\qquad$ **for all** nodes $u \in V$ **do**
+$\qquad\qquad\qquad$ $walk = node2vecWalk(G', u, l)$
+$\qquad\qquad\qquad$ Append $walk$ to $walks$
+$\qquad f = StochasticGradientDescent(k, d, walks)$         
+$\qquad$ **return** $f$
+
+**node2vecWalk**(Graph $G'=(V,E,\pi)$, Start node $u$, Length $l$)
+$\qquad$ Initialize $walk$ to $[u]$         
+$\qquad$ **for** $walk\_iter$ = 1 **to** $l$ **do**
+$\qquad\qquad$ $curr = walk[-1]$         
+$\qquad\qquad$ $V_{curr} = GetNeightbors(curr, G')$
+$\qquad\qquad$ $s = AliasSample(V_{curr}, \pi) \leftarrow look\ into\ detail:$ [Link](https://www.keithschwarz.com/darts-dice-coins/)          
+$\qquad\qquad$ Append $s$ to $walk$
+$\qquad$ **return** $walk$
+
+### [Objective function](## "Skip-gram objective function"):
+Maximizes the log-probability of observing a network neighborhood $N_S(u)$ for a node $u$ conditioned on its feature representation, given by the mapping function $f$:
+
+$$
+\underset{f}{max}\quad \underset{u \in V}{\sum}\ log\ Pr(N_S(u)|f(u))
+$$
+
+Due to the assumption 1 ([conditional independence](## "The likelihood of observing a neighborhood node is independent of observing any other neighborhood node given the feature representation of the source")) and assumption 2 ([symmetry in feature space](## "A source node and neighborhood node have a symmetric effect over each other in feature space")):
+
+$$
+Pr(N_S(u)|f(u)) = \underset{n_i \in N_S(u)}{\prod}\ Pr(n_i|f(u))
+$$
+
+$$
+Pr(n_i|f(u)) = \frac{exp(f(n_i) \cdot f(u))}{\sum_{v \in V} exp(f(v) \cdot f(u))}
+$$
+
+The objective function is transformed as:
+
+$$
+\underset{f}{max}\quad \underset{u \in V}{\sum}\ \left[-log\ Z_u\ +\ \underset{n_i \in N_S(u)}{\sum} f(n_i) \cdot f(u)\right] \leftarrow optimized\ by\ SGD 
+$$
+
+$$
+Z_u = \sum_{v \in V} exp(f(v) \cdot f(u)) \leftarrow approximated\ by\ negative\ sampling
+$$
+
+
 ### What is biased 2nd-order random walk:
+Because the completely random sampling fails to offer any flexibility in sampling of nodes from a network, this paper presents a more flexible random walk, i.e., biased 2nd-order random walk
+
 <p align="center">
     <img src="./images/node2vec/random_walk_procedure.png" width=40%>
 </p>
@@ -166,9 +217,15 @@ $q > 1$: bias towards nodes close to node $t$ $\rightarrow$ obtain a local view 
 $q < 1$: incline to nodes away from node $t$ $\rightarrow$ obtain an outward exploration and approximate DFS behavior 
 
 
+### How to achieve edge embedding: 
+The paper proposed four operators over the corresponding feature vectors $f(u)$ and $f(v)$:
 
-### Why it does not use truncated random walk:
-Because the completely random sampling fails to offer any flexibility in sampling of nodes from a network
+1. Average: $\frac{f_i(u) + f_i(v)}{2}$
+2. Hadamard: $f_i(u) * f_i(v)$
+3. Weighted-L1: $|f_i(u) - f_i(v)|$
+4. Weighted-L1: $|f_i(u) - f_i(v)|^2$
+
+According to the experiment, the *Hadamard* operator when used with node2vec is stable and has the best performance on average across all networks.
 
 
 
