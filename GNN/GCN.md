@@ -112,7 +112,10 @@ G_{(i,j)} =
 & \vdots & \ddots & \vdots &\\
 & -1_{(j,i)} &\cdots & 1_{(j,j)} & \\
 & & & & \ddots \\
-\end{bmatrix}\\
+\end{bmatrix}
+$$
+
+$$
 \vec{x}^TG_{(i,j)}\vec{x} = \vec{x}^T \begin{bmatrix}
 \vdots\\
 x_i - x_j\\
@@ -158,7 +161,10 @@ G^{pos}_{(i,j)} =
 & \vdots& \ddots &\vdots &\\
 & 1_{(j,i)} &\cdots & 1_{(j,j)} & \\
 & & & & \ddots \\
-\end{bmatrix}\\
+\end{bmatrix}
+$$
+
+$$
 \vec{x}^TG_{(i,j)}\vec{x} = \vec{x}^T \begin{bmatrix}
 \vdots\\
 x_i + x_j\\
