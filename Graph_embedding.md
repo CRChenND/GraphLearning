@@ -131,21 +131,21 @@ node2vec is a semi-supervised algorithm for scalable feature learning in network
 **LearnFeature**(Graph $G = (V,E,W)$, Dimensions $d$, Walks per node $r$, Walk length $l$, Context size $k$, Return $p$, In-out $q$)       
 $\qquad \pi = PreprocessModifiedWeights (G,p,q)$ [Tip](## "check sampling distribution and search bias")           
 $\qquad G' = (V, E, \pi)$           
-$\qquad$ Initialize $walks$ to Empty
-$\qquad$ **for** $iter = 1$ **to** $r$ **do**
-$\qquad\qquad$ **for all** nodes $u \in V$ **do**
-$\qquad\qquad\qquad$ $walk = node2vecWalk(G', u, l)$
-$\qquad\qquad\qquad$ Append $walk$ to $walks$
-$\qquad f = StochasticGradientDescent(k, d, walks)$         
+$\qquad$ Initialize $walks$ to Empty                
+$\qquad$ **for** $iter = 1$ **to** $r$ **do**                
+$\qquad\qquad$ **for all** nodes $u \in V$ **do**             
+$\qquad\qquad\qquad$ $walk = node2vecWalk(G', u, l)$           
+$\qquad\qquad\qquad$ Append $walk$ to $walks$              
+$\qquad f = StochasticGradientDescent(k, d, walks)$                 
 $\qquad$ **return** $f$
 
-**node2vecWalk**(Graph $G'=(V,E,\pi)$, Start node $u$, Length $l$)
-$\qquad$ Initialize $walk$ to $[u]$         
-$\qquad$ **for** $walk\_iter$ = 1 **to** $l$ **do**
-$\qquad\qquad$ $curr = walk[-1]$         
-$\qquad\qquad$ $V_{curr} = GetNeightbors(curr, G')$
-$\qquad\qquad$ $s = AliasSample(V_{curr}, \pi) \leftarrow look\ into\ detail:$ [Link](https://www.keithschwarz.com/darts-dice-coins/)          
-$\qquad\qquad$ Append $s$ to $walk$
+**node2vecWalk**(Graph $G'=(V,E,\pi)$, Start node $u$, Length $l$)          
+$\qquad$ Initialize $walk$ to $[u]$                
+$\qquad$ **for** $walk\_iter$ = 1 **to** $l$ **do**          
+$\qquad\qquad$ $curr = walk[-1]$                 
+$\qquad\qquad$ $V_{curr} = GetNeightbors(curr, G')$        
+$\qquad\qquad$ $s = AliasSample(V_{curr}, \pi) \leftarrow look\ into\ detail:$ [Link](https://www.keithschwarz.com/darts-dice-coins/)                  
+$\qquad\qquad$ Append $s$ to $walk$               
 $\qquad$ **return** $walk$
 
 ### [Objective function](## "Skip-gram objective function"):
