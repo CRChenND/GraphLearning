@@ -56,7 +56,7 @@ The distribution of random walks in the network is similar to the power-law dist
 LINE (Large-scale Information Network Embedding) is suitable for arbitrary types of information networks: undirected, directed, and/or weighted. The method optimizes an objective function that preserves both the first-order proximity and second-order proximity.
 
 <p align='center'>
-    <img src="./images/line/network_example.png" width=40%>
+    <img src="./images/line/network_example.png" width=25%>
 </p>
 
 **First-order proximity**: the local pairwise proximity between two vertices, i.e, nodes with direct links in the networks (vertex 6 and vertex 7).       
@@ -180,7 +180,7 @@ $$
 Because the completely random sampling fails to offer any flexibility in sampling of nodes from a network, this paper presents a more flexible random walk, i.e., biased 2nd-order random walk
 
 <p align="center">
-    <img src="./images/node2vec/random_walk_procedure.png" width=40%>
+    <img src="./images/node2vec/random_walk_procedure.png" width=25%>
 </p>
 
 The $2^{nd}$ order random walk means it considers last traversed nodes $t$, current node $v$, and next node(s) $x$. The "biased" means the random walk is controlled by [return parameter](## "controls the likelihood of immediately revisiting a node in the walk") $p$ and [in-out parameter](## "allows the search to differentiate between “inward” and “outward” nodes")  $q$.
