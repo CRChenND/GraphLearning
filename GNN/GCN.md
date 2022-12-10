@@ -14,8 +14,14 @@ Generally, the mapping function $f$ would use the adjacency matrix $A$ to aggreg
 ### How does GCN design its mapping function $f$:
 
 $$
-H^{(l+1)} = \sigma(\hat{D}^{- \frac{1}{2}}\hat{A}\hat{D}^{\frac{1}{2}}H^{(l)}W^{(l)}),\\
-\hat{A}=A+I_N\\
+H^{(l+1)} = \sigma(\hat{D}^{- \frac{1}{2}}\hat{A}\hat{D}^{\frac{1}{2}}H^{(l)}W^{(l)}),
+$$
+
+$$
+\hat{A}=A+I_N
+$$
+
+$$
 \hat{D}=\sum_{j} \hat{A_{ij}} = D + I_N
 $$
 
