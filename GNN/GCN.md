@@ -149,6 +149,7 @@ $$
 **We can further prove that $\Lambda_{sym} \in [0,2]$**,
 
 We can construct a new matrix $G^{pos}_{(i,j)}$,
+
 $$
 G^{pos}_{(i,j)} = 
 \begin{bmatrix}
