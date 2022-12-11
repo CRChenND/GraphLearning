@@ -328,6 +328,7 @@ $$
 $$
 
 GCN uses a [renormalization trick](## "because it has a better performance according to the experiment") to let
+
 $$
 \hat{A}=A+I_N
 $$
