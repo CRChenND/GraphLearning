@@ -8,6 +8,7 @@ Therefore, we want to apply graph embedding to obtain a **low-dimensional contin
 - [DeepWalk](#deepwalk-kdd-14)
 - [LINE](#line-www-15)
 - [node2vec](#node2vec-kdd-16)
+- [metapath2vec]
 
 ## [DeepWalk (KDD '14)](http://www.perozzi.net/publications/14_kdd_deepwalk.pdf)
 ​​DeepWalk originates from word2vec, which uses the co-occurrence relationship between nodes to learn the representation. To describe the co-occurrence relationship between nodes, DeepWalk uses **truncated random walk** (random walk with fixed length) to sample nodes in the graph.
@@ -213,7 +214,7 @@ $$
 
 $p > max(q, 1)$: less likely to sample an already visited node in the following two steps,      
 $p < max(q, 1)$: lead the walk to backtrack a step and keep the walk “local”
-$q > 1$: bias towards nodes close to node $t$ $\rightarrow$ obtain a local view and approximate BFS behavior          
+$q > 1$: bias towards nodes close to node $t$ $\rightarrow$ obtain a local view and approximate BFS behavior                    
 $q < 1$: incline to nodes away from node $t$ $\rightarrow$ obtain an outward exploration and approximate DFS behavior 
 
 
@@ -227,7 +228,6 @@ The paper proposed four operators over the corresponding feature vectors $f(u)$ 
 
 According to the experiment, the *Hadamard* operator when used with node2vec is stable and has the best performance on average across all networks.
 
-
-
-
 [Back to top](#graph-embedding)
+
+## [metapath2vec (KDD '17)](https://ericdongyx.github.io/papers/KDD17-dong-chawla-swami-metapath2vec.pdf)

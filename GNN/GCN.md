@@ -1,6 +1,6 @@
 # [Graph convolutional networks (ICLR '17)](https://arxiv.org/pdf/1609.02907.pdf%EF%BC%89)
 
-### What is graph neural network (GNN):
+## What is graph neural network (GNN):
 GNN is a genre of neural networks dedicated to processing graph data. Specifically, given the adjacency matrix $A \in \mathbb{R}^{N \times N}$ and the matrix of activations $H^{(l)} \in \mathbb{R}^{N \times D}$ in the $l^{th}$ layer, we will try to learn a mapping function $f$ to obtain the node feature representation for the next layer.
 
 $$
@@ -11,7 +11,7 @@ Generally, the mapping function $f$ would use the adjacency matrix $A$ to aggreg
 
 **Therefore, the objective for all GNNs is to design their mapping function $f$.**
 
-### How does GCN design its mapping function $f$:
+## How does GCN design its mapping function $f$:
 
 $$
 H^{(l+1)} = \sigma(\hat{D}^{- \frac{1}{2}}\hat{A}\hat{D}^{\frac{1}{2}}H^{(l)}W^{(l)}),
@@ -25,13 +25,16 @@ $$
 \hat{D}=\sum_{j} \hat{A_{ij}} = D + I_N
 $$
 
-$\hat{A}$ is the adjacency matrix of graph $G$ with added self-connections,               
+$\hat{A}$ is the adjacency matrix of graph $G$ with added self-connections, which aggregate the feature from the nodes themselves and their neighbors,               
 $I_N$ is identity matrix,                 
 $\hat{D}$ is a degree matrix,
 $W^{(l)}$ is a layer-specific trainable weight matrix,            
 $\sigma$ is an activation function, such as the $ReLU$.
 
-### Why does GCN design such a function $f$:
+
+**[noted]** GCN only considers undirected simple graph (contains no duplicate edges and no loops)
+
+## Why does GCN design such a function $f$:
 
 ### Prerequisite 1: spectral graph theory
 Spectral graph theory is the study of the properties of a graph. That is, it limits the study of matrix properties in linear algebra to the adjacency matrix of graphs. So spectral graph theory is a sub area of linear algebra.
@@ -220,6 +223,115 @@ $$
 $$
 
 
-### Prerequisite 2: Fourier transformation
+### Prerequisite 2: Fourier transform
 
-**[noted]** GCN only considers undirected simple graph (contains no duplicate edges and no loops)
+$$
+L = \begin{bmatrix}
+\sum_{(1,j) \in E} (x_1 - x_j)\\
+\sum_{(2,j) \in E} (x_2 - x_j)\\
+\vdots\\
+\sum_{(n,j) \in E} (x_n - x_j)\\
+\end{bmatrix} 
+= U \Lambda U^T x
+$$
+
+The graph Fourier transform to $x$: $F(x) = U^Tx$, and its inverse is defined as: $F^{-1}(\hat{x}) = U\hat{x}$
+
+### Graph convolution:
+The goal of mapping function $F(A)$ is to transfrom the adjacency matrix $A$ into a new matrix with good property (real symmetric or semi-positive defined) such as $L$ or $L_{sym}$:
+
+$$
+F(A) \rightarrow L\ or L_{sym}
+$$
+
+$$
+F(A) = U \Lambda U^T
+$$
+
+For the graph convolution $g_\theta \star x$,
+
+$$
+g_\theta \star x = U g_\theta(\Lambda) U^T x
+$$
+
+To avoid the complicated feature decomposition, we can add some limits to $g_\theta(\Lambda)$,
+
+For example, if $g_\theta(\Lambda) = \theta_0\Lambda^0 + \theta_1\Lambda^1 + ... + \theta_n\Lambda^n$, then 
+
+$$
+(U \Lambda U^T)^k = U \Lambda U^TU \Lambda U^T...U \Lambda U^T = U\Lambda^kU^T
+$$
+
+$$
+Ug_\theta(\Lambda)U^T = g_\theta(U \Lambda U^T) = g_\theta(F(A))
+$$
+
+But the polynomial form $g_\theta(\Lambda)$ will lead to gradient explosion or gradient vanish with the increase of features, so GCN uses Chebyshev polynomial $T_n(x)$:
+
+$$
+T_n(x) = 2xT_{n-1}(x) - T_{n-2}(x), T_0(x)=1, T_1(x) = x
+$$
+
+The advantage of using Chebyshev polynomial is that $T_n(cos\ \theta) = cos\ n\theta$, so no matter how large $n$ would be, $T_n$ will be limited in a certain range. But the requirement of Chebyshev polynomial is that the independant variable should be within $[-1,1]$, i.e., the range of $\Lambda$ should be $[-1,1]$.
+
+Since we already prove that $L_{sym} \in [0,2]$, we can let 
+
+$$
+\Lambda = L_{sym} - I \rightarrow \Lambda \in [-1, 1]
+$$
+
+$$
+\therefore F(A) = L_{sym} - I
+$$
+
+$F(A)$ is a real symmetrical matrix, $F(A) \in [-1,1]$
+
+$$
+g_\theta \star x = U g_\theta(\Lambda) U^T x 
+=  U (\sum_{k=0}^{K}\theta_kT_k(\Lambda)) U^T x 
+$$
+
+$$
+= \sum_{k=0}^{K} \theta_k U T_k(\Lambda) U^T x 
+$$
+
+$$
+= \sum_{k=0}^{K} \theta_k T_k (U \Lambda U^T) x
+$$
+
+$$
+= \sum_{k=0}^{K} \theta_k T_k (L_{sym} - I) x 
+$$
+
+GCN uses a first-order appromixation, where $K \leq 1$
+
+$$
+g_\theta \star x \approx \theta_0 T_0 (L_{sym} - I) x + \theta_1 T_1 (L_{sym} - I) x
+$$
+
+$$
+= \theta_0 x + \theta_1(L_{sym}-I)x
+$$
+
+$$
+\because L_{sym} = D^{-\frac{1}{2}}LD^{-\frac{1}{2}} = D^{-\frac{1}{2}}(D-A)D^{-\frac{1}{2}} = I-D^{-\frac{1}{2}}AD^{-\frac{1}{2}}
+$$
+
+$$
+\therefore \theta_0 x + \theta_1(L_{sym}-I)x = \theta_0 x -\theta_1 D^{-\frac{1}{2}}AD^{-\frac{1}{2}}x
+$$
+
+let $\theta_1 = -\theta_0$,
+
+$$
+\Rightarrow \theta_0(I+D^{-\frac{1}{2}}AD^{-\frac{1}{2}})x
+$$
+
+GCN uses a [renormalization trick](## "because it has a better performance according to the experiment") to let
+$$
+\hat{A}=A+I_N
+$$
+
+$$
+\Rightarrow \theta_0(\hat{D}^{-\frac{1}{2}} \hat{A} \hat{D}^{-\frac{1}{2}})x
+$$
